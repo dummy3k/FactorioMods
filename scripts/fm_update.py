@@ -1,4 +1,3 @@
-from FactorioMods.httpCache import getContent
 import logging
 import logging.config
 
@@ -19,7 +18,7 @@ logging.config.dictConfig({
         },
 		'colored': {
 			'()': 'colorlog.ColoredFormatter',
-			'format': "%(log_color)s%(levelname)-8s%(message)s"
+			'format': "%(log_color)s%(levelname)-5s [%(name)s] %(message)s"
 		}		
     },
     'handlers': { 
@@ -50,5 +49,7 @@ logger.info('Protocol problem: %s', 'connection reset')
 logger.warning('Protocol problem: %s', 'connection reset')
 logger.error('Protocol problem: %s', 'connection reset')
 
-#getContent("http://www.factoriomods.com/recently-updated")
 print("hello world")
+
+from FactorioMods.httpCache import getContent
+getContent("http://www.factoriomods.com/recently-updated")
