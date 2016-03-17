@@ -44,12 +44,11 @@ logging.config.dictConfig({
 
 	
 logger = logging.getLogger('fm_update')
-logger.debug('Protocol problem: %s', 'connection reset')
-logger.info('Protocol problem: %s', 'connection reset')
-logger.warning('Protocol problem: %s', 'connection reset')
-logger.error('Protocol problem: %s', 'connection reset')
-
-print("hello world")
+# logger.debug('Protocol problem: %s', 'connection reset')
+# logger.info('Protocol problem: %s', 'connection reset')
+# logger.warning('Protocol problem: %s', 'connection reset')
+# logger.error('Protocol problem: %s', 'connection reset')
+# print("hello world")
 
 from FactorioMods.httpCache import getContent
 getContent("http://www.factoriomods.com/recently-updated")
