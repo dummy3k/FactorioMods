@@ -10,4 +10,5 @@ setup(name='FactorioMods',
       author_email='l4711@gmx.net',
       # url='https://github.com/dummy3k/to_be_done',
       packages=['FactorioMods'],
+      scripts=['scripts/fm_update.py'],
      )
