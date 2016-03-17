@@ -1,0 +1,4 @@
+build
+*.pyc
+FactorioMods.egg-info
+var
