@@ -24,6 +24,7 @@ def getContent(url):
 	logger.debug("GET? %s", url)
 	# cache_filename = "%s/%s.html" % (get_home_dir(), get_md5_str(url))
 	cache_dir = os.path.join(create_data_dir(), "cache")
+	# cache_dir = os.path.expanduser("~/.FactorioMods/cache")
 	if not os.path.exists(cache_dir):
 		logger.info("creating: %s" % cache_dir)
 		os.mkdir(cache_dir)

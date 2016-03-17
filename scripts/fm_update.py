@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from pprint import pprint
 
 # from colorlog import ColoredFormatter
 # # FORMAT = '%(asctime)-15s %(clientip)s %(user)-8s %(message)s'
@@ -34,9 +35,9 @@ logging.config.dictConfig({
             'level': 'DEBUG',
             'propagate': True
         },
-        'django.request': { 
+        'FactorioMods.httpCache': { 
             'handlers': ['default'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False
         },
     } 
@@ -51,4 +52,15 @@ logger = logging.getLogger('fm_update')
 # print("hello world")
 
 from FactorioMods.httpCache import getContent
-getContent("http://www.factoriomods.com/recently-updated")
+# getContent("http://www.factoriomods.com/recently-updated")
+
+
+
+	# Mod version 	Factorio version 	File version 	Install this version 	Release date
+	
+import FactorioMods.websites.factoriomods_com
+pprint(FactorioMods.websites.factoriomods_com.parse_html("logistics-railway"))
+
+
+# import readline # optional, will allow Up/Down/History in the console
+# import IPython;IPython.embed()

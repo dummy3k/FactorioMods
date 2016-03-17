@@ -13,5 +13,6 @@ setup(name='FactorioMods',
       scripts=['scripts/fm_update.py'],
 	  install_requires=[
           'colorlog', 
+          'BeautifulSoup4', 
       ],
      )
