@@ -11,4 +11,8 @@ setup(name='FactorioMods',
       # url='https://github.com/dummy3k/to_be_done',
       packages=['FactorioMods'],
       scripts=['scripts/fm_update.py'],
+	  install_requires=[
+          'colorlog', 
+		  'coloredlogs', 
+      ],
      )
