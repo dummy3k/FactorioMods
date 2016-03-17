@@ -61,6 +61,9 @@ from FactorioMods.httpCache import getContent
 import FactorioMods.websites.factoriomods_com
 pprint(FactorioMods.websites.factoriomods_com.parse_html("logistics-railway"))
 
+import FactorioMods.websites.test_mode
+pprint(FactorioMods.websites.test_mode.parse_html())
+
 
 # import readline # optional, will allow Up/Down/History in the console
 # import IPython;IPython.embed()
