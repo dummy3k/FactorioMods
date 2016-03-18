@@ -57,13 +57,19 @@ from FactorioMods.httpCache import getContent
 
 
 	# Mod version 	Factorio version 	File version 	Install this version 	Release date
-	
+all_mods = {}
 import FactorioMods.websites.factoriomods_com
-pprint(FactorioMods.websites.factoriomods_com.parse_html("logistics-railway"))
+all_mods["logistics-railway"] = FactorioMods.websites.factoriomods_com.parse_html("logistics-railway")
+# pprint(FactorioMods.websites.factoriomods_com.parse_html("logistics-railway"))
 
 import FactorioMods.websites.test_mode
-pprint(FactorioMods.websites.test_mode.parse_html())
+all_mods["test-mode"] = FactorioMods.websites.test_mode.parse_html()
 
-
+import json
+all_mods_json = json.dumps(all_mods,
+						   sort_keys=True,
+						   indent=4, 
+						   separators=(',', ': '))
+print(all_mods_json)
 # import readline # optional, will allow Up/Down/History in the console
 # import IPython;IPython.embed()

@@ -2,3 +2,4 @@ build
 *.pyc
 FactorioMods.egg-info
 var
+/mods.txt
