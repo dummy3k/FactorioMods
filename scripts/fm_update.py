@@ -10,40 +10,40 @@ from pprint import pprint
 # #https://pypi.python.org/pypi/colorlog/2.0.0
 
 
-logging.config.dictConfig({ 
+logging.config.dictConfig({
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': { 
-        'standard': { 
+    'formatters': {
+        'standard': {
             'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
         },
-		'colored': {
-			'()': 'colorlog.ColoredFormatter',
-			'format': "%(log_color)s%(levelname)-5s [%(name)s] %(message)s"
-		}		
+        'colored': {
+            '()': 'colorlog.ColoredFormatter',
+            'format': "%(log_color)s%(levelname)-5s [%(name)s] %(message)s"
+        }
     },
-    'handlers': { 
-        'default': { 
+    'handlers': {
+        'default': {
             'level': 'DEBUG',
             'formatter': 'colored',
             'class': 'logging.StreamHandler',
         },
     },
-    'loggers': { 
-        '': { 
+    'loggers': {
+        '': {
             'handlers': ['default'],
             'level': 'DEBUG',
             'propagate': True
         },
-        'FactorioMods.httpCache': { 
+        'FactorioMods.httpCache': {
             'handlers': ['default'],
-            'level': 'INFO',
+            'level': 'DEBUG',
             'propagate': False
         },
-    } 
+    }
 })
 
-	
+
 logger = logging.getLogger('fm_update')
 # logger.debug('Protocol problem: %s', 'connection reset')
 # logger.info('Protocol problem: %s', 'connection reset')
@@ -56,20 +56,24 @@ from FactorioMods.httpCache import getContent
 
 
 
-	# Mod version 	Factorio version 	File version 	Install this version 	Release date
-all_mods = {}
-import FactorioMods.websites.factoriomods_com
-all_mods["logistics-railway"] = FactorioMods.websites.factoriomods_com.parse_html("logistics-railway")
-# pprint(FactorioMods.websites.factoriomods_com.parse_html("logistics-railway"))
+def dump_mods():
+    all_mods = {}
+    import FactorioMods.websites.factoriomods_com
+    # all_mods["logistics-railway"] = FactorioMods.websites.factoriomods_com.parse_html("logistics-railway")
+    # pprint(FactorioMods.websites.factoriomods_com.parse_html("logistics-railway"))
 
-import FactorioMods.websites.test_mode
-all_mods["test-mode"] = FactorioMods.websites.test_mode.parse_html()
+    import FactorioMods.websites.test_mode
+    all_mods["test-mode"] = FactorioMods.websites.test_mode.parse_html()
 
-import json
-all_mods_json = json.dumps(all_mods,
-						   sort_keys=True,
-						   indent=4, 
-						   separators=(',', ': '))
-print(all_mods_json)
-# import readline # optional, will allow Up/Down/History in the console
-# import IPython;IPython.embed()
+    import json
+    all_mods_json = json.dumps(all_mods,
+                               sort_keys=True,
+                               indent=4,
+                               separators=(',', ': '))
+    # print(all_mods_json)
+    # import readline # optional, will allow Up/Down/History in the console
+    # import IPython;IPython.embed()
+
+# dump_mods()
+# getContent("https://docs.python.org/2/library/httplib.html")
+getContent("https://raw.githubusercontent.com/dummy3k/FactorioMods/master/.gitignore")
