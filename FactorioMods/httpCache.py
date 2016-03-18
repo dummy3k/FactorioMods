@@ -1,7 +1,6 @@
 import hashlib, os, urllib2, datetime
 
 import logging
-
 logger = logging.getLogger(__name__)
 
 
@@ -26,6 +25,7 @@ def get_md5_str(s):
 
 
 def getContent(url):
+    logger.debug("url: %s" % url)
     cache_dir = os.path.join(create_data_dir(), "cache")
     # cache_dir = os.path.expanduser("~/.FactorioMods/cache")
     if not os.path.exists(cache_dir):
@@ -78,7 +78,7 @@ def getContent(url):
         logger.debug("e.code: %s" % e.code)
         if e.code != 304:
             raise
-        logger.debug("cache hit (http error): %s" % url)
+        logger.info("cache hit (http error): %s" % url)
         with open(cache_filename, 'r') as f:
             return f.read()
 

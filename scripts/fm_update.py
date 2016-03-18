@@ -1,3 +1,4 @@
+import argparse
 import logging
 import logging.config
 from pprint import pprint
@@ -32,12 +33,17 @@ logging.config.dictConfig({
     'loggers': {
         '': {
             'handlers': ['default'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True
         },
         'FactorioMods.httpCache': {
             'handlers': ['default'],
-            'level': 'DEBUG',
+            'level': 'INFO',
+            'propagate': False
+        },
+        'FactorioMods.websites.com.factoriomods.ModPage': {
+            'handlers': ['default'],
+            'level': 'INFO',
             'propagate': False
         },
     }
@@ -45,16 +51,6 @@ logging.config.dictConfig({
 
 
 logger = logging.getLogger('fm_update')
-# logger.debug('Protocol problem: %s', 'connection reset')
-# logger.info('Protocol problem: %s', 'connection reset')
-# logger.warning('Protocol problem: %s', 'connection reset')
-# logger.error('Protocol problem: %s', 'connection reset')
-# print("hello world")
-
-from FactorioMods.httpCache import getContent
-# getContent("http://www.factoriomods.com/recently-updated")
-
-
 
 def dump_mods():
     all_mods = {}
@@ -76,4 +72,60 @@ def dump_mods():
 
 # dump_mods()
 # getContent("https://docs.python.org/2/library/httplib.html")
-getContent("https://raw.githubusercontent.com/dummy3k/FactorioMods/master/.gitignore")
+# getContent("https://raw.githubusercontent.com/dummy3k/FactorioMods/master/.gitignore")
+
+from FactorioMods.websites.com.factoriomods.AllModsPage import AllModsPage
+from FactorioMods.websites.com.factoriomods.ModPage import ModPage
+
+def update_all():
+    amp = AllModsPage()
+    print(amp.max_pages)
+    print(amp.mods)
+
+    factorio_versions = {}
+    while amp:
+        for mod_name in amp.mods:
+            try:
+                mp = ModPage(mod_name)
+                logger.debug(mp.dict)
+                versions = map(lambda x: x['mod_version'], mp.dict)
+                # print(versions)
+                # factorio_versions[factorio_version][mod_name] = {'max_mod_version':versions[0]}
+
+                for item in mp.dict:
+                    factorio_version = item['factorio_version']
+                    if not factorio_version in factorio_versions:
+                        factorio_versions[factorio_version] = {}
+                    if not mod_name in factorio_versions[factorio_version]:
+                        factorio_versions[factorio_version][mod_name] = {}
+
+                    mod_version = item['mod_version']
+                    factorio_versions[factorio_version][mod_name][mod_version] = item['download_link']
+            except:
+                logger.warn("failed: %s" % mod_name)
+                raise
+
+        if not amp.max_pages or amp.page_number >= amp.max_pages:
+            amp = None
+        else:
+            amp = AllModsPage(amp.page_number + 1)
+
+    pprint(factorio_versions)
+
+    import json
+    for factorio_version in factorio_versions:
+        with open("var/%s.json" % factorio_version, 'w') as f:
+            json.dump(factorio_versions[factorio_version], f,
+                                   sort_keys=True,
+                                   indent=4)
+
+def main():
+    parser = argparse.ArgumentParser(description='Update FactorioMods')
+    parser.add_argument('--update_all', action='store_true')
+    args = parser.parse_args()
+    if args.update_all:
+        update_all()
+
+
+if __name__ == '__main__':
+    main()
