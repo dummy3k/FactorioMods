@@ -77,10 +77,12 @@ def dump_mods():
 from FactorioMods.websites.com.factoriomods.AllModsPage import AllModsPage
 from FactorioMods.websites.com.factoriomods.ModPage import ModPage
 
-def update_all():
+import os
+
+def update_all(outdir):
     amp = AllModsPage()
-    print(amp.max_pages)
-    print(amp.mods)
+    logger.debug(amp.max_pages)
+    logger.debug(amp.mods)
 
     factorio_versions = {}
     while amp:
@@ -110,11 +112,12 @@ def update_all():
         else:
             amp = AllModsPage(amp.page_number + 1)
 
-    pprint(factorio_versions)
+    # pprint(factorio_versions)
 
     import json
     for factorio_version in factorio_versions:
-        with open("var/%s.json" % factorio_version, 'w') as f:
+        out_filename = os.path.join(outdir, "%s.json" % factorio_version)
+        with open(out_filename, 'w') as f:
             json.dump(factorio_versions[factorio_version], f,
                                    sort_keys=True,
                                    indent=4)
@@ -122,9 +125,13 @@ def update_all():
 def main():
     parser = argparse.ArgumentParser(description='Update FactorioMods')
     parser.add_argument('--update_all', action='store_true')
+    parser.add_argument('-o', action='store')
     args = parser.parse_args()
     if args.update_all:
-        update_all()
+        if not args.o:
+            logger.error("missing argument o")
+
+        update_all(args.o)
 
 
 if __name__ == '__main__':
